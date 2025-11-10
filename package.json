@@ -12,7 +12,7 @@
     "prettier:write": "prettier --write ./src",
     "preview": "vite preview",
     "test:e2e": "playwright test",
-    "test:e2e:basic": "playwright test basic",
+    "test:e2e:basic": "playwright test e2e/basics/",
     "test:e2e:advanced": "playwright test advanced",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "npx playwright show-report",
