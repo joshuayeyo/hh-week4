@@ -1,3 +1,4 @@
+import { Toast } from './components/commons/Toast/index.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -5,7 +6,7 @@ import {
   장바구니_선택없음,
   장바구니_선택있음,
 } from './constants/templates/cart-templates.js';
-import { 토스트, _404_ } from './constants/templates/common-templates.js';
+import { _404_ } from './constants/templates/common-templates.js';
 import {
   상세페이지_로딩,
   상세페이지_로딩완료,
@@ -27,7 +28,12 @@ function main() {
     <br />
     ${상품목록_레이아웃_카테고리_2Depth}
     <br />
-    ${토스트}
+    <div id="toast-demo" style="margin-bottom: 20px; justify-content: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <h1>동적 Toast 컴포넌트 테스트</h1>
+      <button id="success-btn">성공 토스트</button>
+      <button id="error-btn">에러 토스트</button>
+      <button id="info-btn">정보 토스트</button>
+    </div>
     <br />
     ${장바구니_비어있음}
     <br />
@@ -41,6 +47,21 @@ function main() {
     <br />
     ${_404_}
   `;
+
+  document.getElementById('success-btn').addEventListener('click', () => {
+    const toast = new Toast('success', '성공적으로 처리되었습니다!');
+    toast.show();
+  });
+
+  document.getElementById('error-btn').addEventListener('click', () => {
+    const toast = new Toast('error', '오류가 발생했습니다.');
+    toast.show();
+  });
+
+  document.getElementById('info-btn').addEventListener('click', () => {
+    const toast = new Toast('info', '알림 메시지입니다.');
+    toast.show();
+  });
 }
 
 if (import.meta.env.MODE !== 'test') {
