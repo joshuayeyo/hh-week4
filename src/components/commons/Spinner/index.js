@@ -10,6 +10,12 @@ export class Spinner {
     this.color = options.color || 'blue';
     this.text = options.text || null;
     this.spinnerElement = null;
+    this.loadingState = options.loadingState || null;
+    this.unsubscribe = null;
+
+    if (this.loadingState) {
+      this.bindLoadingState();
+    }
   }
 
   render() {
@@ -113,5 +119,33 @@ export class Spinner {
     if (this.spinnerElement) {
       this.spinnerElement.style.display = 'none';
     }
+  }
+
+  bindLoadingState() {
+    this.unsubscribe = this.loadingState.subscribe((state) => {
+      if (state.isLoading) {
+        this.show();
+      } else {
+        this.hide();
+      }
+    });
+  }
+
+  setLoadingState(loadingState) {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+
+    this.loadingState = loadingState;
+    if (this.loadingState) {
+      this.bindLoadingState();
+    }
+  }
+
+  destroy() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+    this.unmount();
   }
 }
