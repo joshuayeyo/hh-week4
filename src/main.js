@@ -1,4 +1,6 @@
 import { Toast } from './components/commons/Toast/index.js';
+import { mountDetailSpinner } from './hooks/components/commons/mountDetailSpinner.js';
+import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -66,6 +68,8 @@ function main() {
 
   // SearchBar 컴포넌트 마운트 (즉시 실행)
   mountSearchBar();
+  mountSpinner();
+  mountDetailSpinner();
 }
 
 if (import.meta.env.MODE !== 'test') {
