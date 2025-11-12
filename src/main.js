@@ -7,6 +7,7 @@ import { mountProductGrid } from './hooks/components/commons/mountProductGrid.js
 import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
 import { mountProductDetailBreadcrumb } from './hooks/components/features/mountProductDetailBreadcrumb.js';
 import { mountProductDetailHeader } from './hooks/components/features/mountProductDetailHeader.js';
+import { mountProductQuantityActions } from './hooks/components/features/mountProductQuantityActions.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -202,6 +203,30 @@ function main() {
       };
 
       mountProductDetailBreadcrumb(containerId, options);
+    });
+
+  // ProductQuantityActions 마운트 (모든 .product-quantity-actions 요소에)
+  document
+    .querySelectorAll('.product-quantity-actions')
+    .forEach((container, index) => {
+      const containerId = `product-quantity-actions-${index}`;
+      container.id = containerId;
+
+      const productId = container.getAttribute('data-product-id');
+      const price = parseInt(container.getAttribute('data-price')) || 0;
+      const maxQuantity =
+        parseInt(container.getAttribute('data-max-quantity')) || 999;
+
+      const options = {
+        productId,
+        quantity: 1,
+        maxQuantity,
+        price,
+        cartButtonText: '장바구니 담기',
+        showBackToListButton: true,
+      };
+
+      mountProductQuantityActions(containerId, options);
     });
 }
 
