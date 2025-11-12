@@ -8,6 +8,7 @@ import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
 import { mountProductDetailBreadcrumb } from './hooks/components/features/mountProductDetailBreadcrumb.js';
 import { mountProductDetailHeader } from './hooks/components/features/mountProductDetailHeader.js';
 import { mountProductQuantityActions } from './hooks/components/features/mountProductQuantityActions.js';
+import { mountProductRating } from './hooks/components/features/mountProductRating.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -228,6 +229,28 @@ function main() {
 
       mountProductQuantityActions(containerId, options);
     });
+
+  // ProductRating 마운트 (모든 .product-rating 요소에)
+  document.querySelectorAll('.product-rating').forEach((container, index) => {
+    const containerId = `product-rating-${index}`;
+    container.id = containerId;
+
+    const productId = container.getAttribute('data-product-id');
+    const rating = parseFloat(container.getAttribute('data-rating')) || 0;
+    const reviewCount =
+      parseInt(container.getAttribute('data-review-count')) || 0;
+    const size = container.getAttribute('data-size') || 'medium';
+
+    const options = {
+      productId,
+      rating,
+      reviewCount,
+      size,
+      showClickableReviews: true,
+    };
+
+    mountProductRating(containerId, options);
+  });
 }
 
 if (import.meta.env.MODE !== 'test') {
