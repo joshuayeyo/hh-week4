@@ -57,13 +57,8 @@ export const 상품목록_레이아웃_로딩 = `
               </div>
               <!-- 2depth 카테고리 -->
             </div>
-            <!-- 기존 필터들 -->
-            <div class="flex gap-2 items-center justify-between">
-              <!-- 페이지당 상품 수 -->
-              <div class="items-per-page-selector"></div>
-              <!-- 정렬 -->
-              <div class="sort-selector"></div>
-            </div>
+            <!-- 필터바 -->
+            <div class="filter-bar"></div>
           </div>
         </div>
         <!-- 상품 목록 -->
@@ -122,13 +117,8 @@ export const 상품목록_레이아웃_로딩완료 = `
               </div>
               <!-- 2depth 카테고리 -->
             </div>
-            <!-- 기존 필터들 -->
-            <div class="flex gap-2 items-center justify-between">
-              <!-- 페이지당 상품 수 -->
-              <div class="items-per-page-selector"></div>
-              <!-- 정렬 -->
-              <div class="sort-selector"></div>
-            </div>
+            <!-- 필터바 -->
+            <div class="filter-bar"></div>
           </div>
         </div>
         <!-- 상품 목록 -->
@@ -193,13 +183,8 @@ export const 상품목록_레이아웃_카테고리_1Depth = `
             </div>
           </div>
           
-          <!-- 기존 필터들 -->
-          <div class="flex gap-2 items-center justify-between">
-            <!-- 페이지당 상품 수 -->
-            <div class="items-per-page-selector"></div>
-            <!-- 정렬 -->
-            <div class="sort-selector"></div>
-          </div>
+          <!-- 필터바 -->
+          <div class="filter-bar"></div>
         </div>
       </div>
     </main>
@@ -247,13 +232,8 @@ export const 상품목록_레이아웃_카테고리_2Depth = `
             </div>
           </div>
           
-          <!-- 기존 필터들 -->
-          <div class="flex gap-2 items-center justify-between">
-            <!-- 페이지당 상품 수 -->
-            <div class="items-per-page-selector"></div>
-            <!-- 정렬 -->
-            <div class="sort-selector"></div>
-          </div>
+          <!-- 필터바 -->
+          <div class="filter-bar"></div>
         </div>
       </div>
     </main>

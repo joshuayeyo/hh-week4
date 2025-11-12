@@ -1,9 +1,8 @@
 import { Toast } from './components/commons/Toast/index.js';
 import { mountCartIcon } from './hooks/components/commons/mountCartIcon.js';
 import { mountDetailSpinner } from './hooks/components/commons/mountDetailSpinner.js';
-import { mountItemsPerPageSelector } from './hooks/components/commons/mountItemsPerPageSelector.js';
+import { mountFilterBar } from './hooks/components/commons/mountFilterBar.js';
 import { mountProductGrid } from './hooks/components/commons/mountProductGrid.js';
-import { mountSortSelector } from './hooks/components/commons/mountSortSelector.js';
 import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
@@ -110,28 +109,20 @@ function main() {
   const loadedGrid = mountProductGrid('products-grid-loaded');
   loadedGrid.render(sampleProducts);
 
-  // ItemsPerPageSelector 마운트 (모든 .items-per-page-selector 요소에)
-  document
-    .querySelectorAll('.items-per-page-selector')
-    .forEach((container, index) => {
-      // ID를 먼저 설정
-      const containerId = `items-per-page-${index}`;
-      container.id = containerId;
-
-      // 컴포넌트 마운트
-      mountItemsPerPageSelector(containerId, {
-        defaultValue: 20,
-        options: [10, 20, 50, 100],
-      });
-    });
-
-  // SortSelector 마운트 (모든 .sort-selector 요소에)
-  document.querySelectorAll('.sort-selector').forEach((container, index) => {
-    const containerId = `sort-selector-${index}`;
+  // FilterBar 마운트 (모든 .filter-bar 요소에)
+  document.querySelectorAll('.filter-bar').forEach((container, index) => {
+    const containerId = `filter-bar-${index}`;
     container.id = containerId;
 
-    mountSortSelector(containerId, {
-      defaultValue: 'price_asc',
+    mountFilterBar(containerId, {
+      itemsPerPageOptions: {
+        defaultValue: 20,
+        options: [10, 20, 50, 100],
+      },
+      sortOptions: {
+        defaultValue: 'price_asc',
+      },
+      layout: 'horizontal',
     });
   });
 }
