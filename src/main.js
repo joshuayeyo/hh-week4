@@ -1,8 +1,8 @@
 import { Toast } from './components/commons/Toast/index.js';
-import { mountCartIcon } from './hooks/components/commons/mountCartIcon.js';
 import { mountCategoryFilter } from './hooks/components/commons/mountCategoryFilter.js';
 import { mountDetailSpinner } from './hooks/components/commons/mountDetailSpinner.js';
 import { mountFilterBar } from './hooks/components/commons/mountFilterBar.js';
+import { mountHeader } from './hooks/components/commons/mountHeader.js';
 import { mountProductGrid } from './hooks/components/commons/mountProductGrid.js';
 import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
 import { enableMocking } from './utils/enable-mocking.js';
@@ -74,12 +74,6 @@ function main() {
   mountSearchBar();
   mountSpinner();
   mountDetailSpinner();
-
-  // CartIcon 마운트 (다양한 상태)
-  mountCartIcon('cart-icon-container', { count: 0 }); // 로딩 상태 (0개)
-  mountCartIcon('cart-icon-container-loaded', { count: 4 }); // 로딩완료 상태 (4개)
-  mountCartIcon('cart-icon-detail-loading', { count: 0 }); // 상세페이지 로딩 (0개)
-  mountCartIcon('cart-icon-detail-loaded', { count: 1 }); // 상세페이지 로딩완료 (1개)
 
   // ProductGrid 마운트
   // 로딩 상태 그리드 (스켈레톤)
@@ -155,6 +149,24 @@ function main() {
     }
 
     mountCategoryFilter(containerId, options);
+  });
+
+  // Header 마운트 (모든 .header 요소에)
+  document.querySelectorAll('.header').forEach((container, index) => {
+    const containerId = `header-${index}`;
+    container.id = containerId;
+
+    const cartCount = parseInt(container.getAttribute('data-cart-count')) || 0;
+
+    const options = {
+      title: '쇼핑몰',
+      homeLink: true,
+      cartIconOptions: {
+        count: cartCount,
+      },
+    };
+
+    mountHeader(containerId, options);
   });
 }
 
