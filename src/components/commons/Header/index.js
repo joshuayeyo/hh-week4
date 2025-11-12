@@ -1,20 +1,18 @@
-// Header component with embedded CartIcon
-// CartIcon이 임베드된 헤더 컴포넌트
-
-import { CartIcon } from '@/components/commons/CartIcon';
+// Basic Header component providing common header structure
+// 기본 헤더 구조를 제공하는 공통 헤더 컴포넌트
 
 export class Header {
   constructor(options = {}) {
-    this.title = options.title || '쇼핑몰';
-    this.homeLink = options.homeLink !== false;
-    this.cartIconOptions = options.cartIconOptions || { count: 0 };
+    this.title = options.title || '제목';
+    this.leftContent = options.leftContent || null; // 왼쪽 콘텐츠 (뒤로가기 버튼 등)
+    this.rightContent = options.rightContent || null; // 오른쪽 콘텐츠 (장바구니 등)
+    this.sticky = options.sticky !== false; // 기본값: sticky
     this.containerElement = null;
-    this.cartIcon = null;
   }
 
   render() {
     this.containerElement = document.createElement('header');
-    this.containerElement.className = 'bg-white shadow-sm sticky top-0 z-40';
+    this.containerElement.className = `bg-white shadow-sm ${this.sticky ? 'sticky top-0 z-40' : ''}`;
 
     const maxWidthDiv = document.createElement('div');
     maxWidthDiv.className = 'max-w-md mx-auto px-4 py-4';
@@ -22,37 +20,39 @@ export class Header {
     const flexContainer = document.createElement('div');
     flexContainer.className = 'flex items-center justify-between';
 
-    // 제목 부분
-    const titleElement = document.createElement('h1');
-    titleElement.className = 'text-xl font-bold text-gray-900';
+    // 왼쪽 콘텐츠 영역
+    const leftSection = document.createElement('div');
+    leftSection.className = 'flex items-center space-x-3';
 
-    if (this.homeLink) {
-      const titleLink = document.createElement('a');
-      titleLink.href = '/';
-      titleLink.setAttribute('data-link', '');
-      titleLink.textContent = this.title;
-      titleElement.appendChild(titleLink);
-    } else {
-      titleElement.textContent = this.title;
+    if (this.leftContent) {
+      if (typeof this.leftContent === 'string') {
+        leftSection.innerHTML = this.leftContent;
+      } else {
+        leftSection.appendChild(this.leftContent);
+      }
     }
 
-    // 액션 부분 (CartIcon 포함)
-    const actionsDiv = document.createElement('div');
-    actionsDiv.className = 'flex items-center space-x-2';
-    actionsDiv.id = 'header-actions';
+    // 제목
+    const titleElement = document.createElement('h1');
+    titleElement.className = 'text-lg font-bold text-gray-900';
+    titleElement.textContent = this.title;
+    leftSection.appendChild(titleElement);
 
-    const cartIconContainer = document.createElement('div');
-    cartIconContainer.id = 'cart-icon-container';
+    // 오른쪽 콘텐츠 영역
+    const rightSection = document.createElement('div');
+    rightSection.className = 'flex items-center space-x-2';
 
-    // CartIcon 생성 및 마운트
-    this.cartIcon = new CartIcon(this.cartIconOptions);
-    cartIconContainer.appendChild(this.cartIcon.render());
-
-    actionsDiv.appendChild(cartIconContainer);
+    if (this.rightContent) {
+      if (typeof this.rightContent === 'string') {
+        rightSection.innerHTML = this.rightContent;
+      } else {
+        rightSection.appendChild(this.rightContent);
+      }
+    }
 
     // 구조 조립
-    flexContainer.appendChild(titleElement);
-    flexContainer.appendChild(actionsDiv);
+    flexContainer.appendChild(leftSection);
+    flexContainer.appendChild(rightSection);
     maxWidthDiv.appendChild(flexContainer);
     this.containerElement.appendChild(maxWidthDiv);
 
@@ -62,36 +62,21 @@ export class Header {
 
   bindEvents() {
     if (!this.containerElement) return;
-
-    // CartIcon 이벤트 위임 (필요시 추가)
-    this.containerElement.addEventListener('cart-click', (e) => {
-      console.log('Cart clicked from Header:', e.detail);
-      // 상위 컴포넌트에서 처리
-    });
-  }
-
-  // 편의 메서드들
-  updateCartCount(count) {
-    if (this.cartIcon) {
-      this.cartIcon.updateCount(count);
-    }
-  }
-
-  setCartCount(count) {
-    this.cartIconOptions.count = count;
-    if (this.cartIcon) {
-      this.cartIcon.updateCount(count);
-    }
-  }
-
-  getCartCount() {
-    return this.cartIcon
-      ? this.cartIcon.getCount()
-      : this.cartIconOptions.count;
+    // 기본 이벤트 처리 (필요시 확장)
   }
 
   setTitle(title) {
     this.title = title;
+    this.refresh();
+  }
+
+  setLeftContent(content) {
+    this.leftContent = content;
+    this.refresh();
+  }
+
+  setRightContent(content) {
+    this.rightContent = content;
     this.refresh();
   }
 

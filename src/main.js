@@ -5,6 +5,7 @@ import { mountFilterBar } from './hooks/components/commons/mountFilterBar.js';
 import { mountHeader } from './hooks/components/commons/mountHeader.js';
 import { mountProductGrid } from './hooks/components/commons/mountProductGrid.js';
 import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
+import { mountProductDetailHeader } from './hooks/components/features/mountProductDetailHeader.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -162,6 +163,26 @@ function main() {
 
     mountHeader(containerId, options);
   });
+
+  // ProductDetailHeader 마운트 (모든 .product-detail-header 요소에)
+  document
+    .querySelectorAll('.product-detail-header')
+    .forEach((container, index) => {
+      const containerId = `product-detail-header-${index}`;
+      container.id = containerId;
+
+      const cartCount =
+        parseInt(container.getAttribute('data-cart-count')) || 0;
+
+      const options = {
+        title: '상품 상세',
+        cartIconOptions: {
+          count: cartCount,
+        },
+      };
+
+      mountProductDetailHeader(containerId, options);
+    });
 }
 
 if (import.meta.env.MODE !== 'test') {

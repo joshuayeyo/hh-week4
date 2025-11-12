@@ -1,7 +1,7 @@
-// Header mount function
-// 헤더 마운트 함수
+// ProductListHeader mount function
+// 상품 목록 헤더 마운트 함수
 
-import { Header } from '@/components/commons/Header';
+import { Header } from '@/components/features/ProductListHeader';
 
 export function mountHeader(containerId, options = {}) {
   const container = document.getElementById(containerId);
