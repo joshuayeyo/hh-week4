@@ -1,5 +1,6 @@
 import { Toast } from './components/commons/Toast/index.js';
 import { mountCartIcon } from './hooks/components/commons/mountCartIcon.js';
+import { mountCategoryFilter } from './hooks/components/commons/mountCategoryFilter.js';
 import { mountDetailSpinner } from './hooks/components/commons/mountDetailSpinner.js';
 import { mountFilterBar } from './hooks/components/commons/mountFilterBar.js';
 import { mountProductGrid } from './hooks/components/commons/mountProductGrid.js';
@@ -124,6 +125,36 @@ function main() {
       },
       layout: 'horizontal',
     });
+  });
+
+  // CategoryFilter 마운트 (모든 .category-filter 요소에)
+  document.querySelectorAll('.category-filter').forEach((container, index) => {
+    const containerId = `category-filter-${index}`;
+    container.id = containerId;
+
+    const state = container.getAttribute('data-state');
+    const category1 = container.getAttribute('data-category1');
+    const category2 = container.getAttribute('data-category2');
+
+    const options = {
+      categories: {
+        '생활/건강': ['생활용품', '주방용품', '문구/사무용품'],
+        '디지털/가전': ['스마트폰', '노트북', '가전제품'],
+      },
+      showBreadcrumb: true,
+    };
+
+    // 상태에 따른 초기 선택값 설정
+    if (state === 'loading') {
+      options.categories = {}; // 로딩 상태
+    } else if (state === 'category1-selected') {
+      options.selectedCategory1 = category1;
+    } else if (state === 'category2-selected') {
+      options.selectedCategory1 = category1;
+      options.selectedCategory2 = category2;
+    }
+
+    mountCategoryFilter(containerId, options);
   });
 }
 
