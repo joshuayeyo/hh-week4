@@ -12,6 +12,7 @@ import { mountProductQuantityActions } from './hooks/components/features/mountPr
 import { mountProductRating } from './hooks/components/features/mountProductRating.js';
 import { mountRelatedProducts } from './hooks/components/features/mountRelatedProducts.js';
 import { mountNotFound } from './hooks/pages/mountNotFound.js';
+import { mountProductDetailPage } from './hooks/pages/mountProductDetailPage.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -19,10 +20,6 @@ import {
   장바구니_선택없음,
   장바구니_선택있음,
 } from './constants/templates/cart-templates.js';
-import {
-  상세페이지_로딩,
-  상세페이지_로딩완료,
-} from './constants/templates/product-detail-templates.js';
 import {
   상품목록_레이아웃_로딩,
   상품목록_레이아웃_로딩완료,
@@ -48,9 +45,9 @@ function main() {
     <br />
     ${장바구니_선택있음}
     <br />
-    ${상세페이지_로딩}
+    <div id="product-detail-loading-container"></div>
     <br />
-    ${상세페이지_로딩완료}
+    <div id="product-detail-loaded-container"></div>
     <br />
     <div id="notfound-container"></div>
   `;
@@ -323,6 +320,21 @@ function main() {
     };
 
     mountRelatedProducts(containerId, options);
+  });
+
+  // ProductDetailPage 마운트 (로딩 상태)
+  mountProductDetailPage('product-detail-loading-container', {
+    isLoading: true,
+    cartCount: 0,
+  });
+
+  // ProductDetailPage 마운트 (로딩 완료 상태)
+  mountProductDetailPage('product-detail-loaded-container', {
+    isLoading: false,
+    cartCount: 1,
+    category1: '생활/건강',
+    category2: '생활용품',
+    productId: '85067212996',
   });
 
   // NotFound 페이지 마운트
