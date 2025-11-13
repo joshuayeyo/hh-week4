@@ -4,6 +4,7 @@ import { mountDetailSpinner } from './hooks/components/commons/mountDetailSpinne
 import { mountFilterBar } from './hooks/components/commons/mountFilterBar.js';
 import { mountHeader } from './hooks/components/commons/mountHeader.js';
 import { mountProductGrid } from './hooks/components/commons/mountProductGrid.js';
+import { mountSearchBar } from './hooks/components/commons/mountSearchBar.js';
 import { mountSpinner } from './hooks/components/commons/mountSpinner.js';
 import { mountProductDetail } from './hooks/components/features/mountProductDetail.js';
 import { mountProductDetailBreadcrumb } from './hooks/components/features/mountProductDetailBreadcrumb.js';
@@ -13,6 +14,7 @@ import { mountProductRating } from './hooks/components/features/mountProductRati
 import { mountRelatedProducts } from './hooks/components/features/mountRelatedProducts.js';
 import { mountNotFound } from './hooks/pages/mountNotFound.js';
 import { mountProductDetailPage } from './hooks/pages/mountProductDetailPage.js';
+import { mountProductListPage } from './hooks/pages/mountProductListPage.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -20,17 +22,12 @@ import {
   장바구니_선택없음,
   장바구니_선택있음,
 } from './constants/templates/cart-templates.js';
-import {
-  상품목록_레이아웃_로딩,
-  상품목록_레이아웃_로딩완료,
-  mountSearchBar,
-} from './constants/templates/product-list-template.js';
 
 function main() {
   document.body.innerHTML = `
-    ${상품목록_레이아웃_로딩}
+    <div id="product-list-loading-container"></div>
     <br />
-    ${상품목록_레이아웃_로딩완료}
+    <div id="product-list-loaded-container"></div>
     <br />
     <div id="toast-demo" style="margin-bottom: 20px; justify-content: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
       <h1>동적 Toast 컴포넌트 테스트</h1>
@@ -335,6 +332,20 @@ function main() {
     category1: '생활/건강',
     category2: '생활용품',
     productId: '85067212996',
+  });
+
+  // ProductListPage 마운트 (로딩 상태)
+  mountProductListPage('product-list-loading-container', {
+    isLoading: true,
+    cartCount: 0,
+  });
+
+  // ProductListPage 마운트 (로딩 완료 상태)
+  mountProductListPage('product-list-loaded-container', {
+    isLoading: false,
+    cartCount: 4,
+    categoryState: 'loaded',
+    totalProducts: 340,
   });
 
   // NotFound 페이지 마운트
