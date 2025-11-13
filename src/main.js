@@ -11,6 +11,7 @@ import { mountProductDetailHeader } from './hooks/components/features/mountProdu
 import { mountProductQuantityActions } from './hooks/components/features/mountProductQuantityActions.js';
 import { mountProductRating } from './hooks/components/features/mountProductRating.js';
 import { mountRelatedProducts } from './hooks/components/features/mountRelatedProducts.js';
+import { mountNotFound } from './hooks/pages/mountNotFound.js';
 import { enableMocking } from './utils/enable-mocking.js';
 
 import {
@@ -18,7 +19,6 @@ import {
   장바구니_선택없음,
   장바구니_선택있음,
 } from './constants/templates/cart-templates.js';
-import { _404_ } from './constants/templates/common-templates.js';
 import {
   상세페이지_로딩,
   상세페이지_로딩완료,
@@ -52,7 +52,7 @@ function main() {
     <br />
     ${상세페이지_로딩완료}
     <br />
-    ${_404_}
+    <div id="notfound-container"></div>
   `;
 
   document.getElementById('success-btn').addEventListener('click', () => {
@@ -324,6 +324,9 @@ function main() {
 
     mountRelatedProducts(containerId, options);
   });
+
+  // NotFound 페이지 마운트
+  mountNotFound('notfound-container');
 }
 
 if (import.meta.env.MODE !== 'test') {
